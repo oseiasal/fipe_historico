@@ -1,7 +1,7 @@
 import { searchForAllCarsBrand } from "@/services/fipe_api";
 import { NextResponse } from "next/server";
 
-export async function GET(req, context) {
+export async function GET(req: Request, context: any) {
   const { brandCode, fipeTable } = context.params;
 
   try {

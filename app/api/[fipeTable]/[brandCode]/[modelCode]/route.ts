@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { searcForCarYears } from "@/services/fipe_api";
 import { extractSortedYears } from "@/utils";
 
-export async function GET(req, context) {
+export async function GET(req: Request, context: any) {
   const { modelCode, brandCode, fipeTable } = context.params;
 
   try {

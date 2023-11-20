@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { searchForTable } from "@/services/fipe_api";
-export async function GET(req, res) {
+export async function GET(req: Request) {
 
   try {
     const data = await searchForTable();
