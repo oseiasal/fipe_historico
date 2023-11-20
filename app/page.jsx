@@ -133,7 +133,6 @@ export default function IndexPage() {
       tableList,
       fipeData.AnoModelo,
     ).Codigo;
-    console.log(fipeCode, final_table);
     for (let index = actual_table; index > final_table; index--) {
       getFipeData(index, brandCode, modelCode, fipeData.AnoModelo).then((res) =>
         setTable((state) => [...state, res]),
@@ -143,7 +142,6 @@ export default function IndexPage() {
 
   return (
     <>
-      {console.log(table)}
       <div>
         <select
           defaultValue=""
