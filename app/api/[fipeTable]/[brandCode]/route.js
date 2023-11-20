@@ -1,10 +1,11 @@
 import { searchForAllCarsBrand } from "@/services/fipe_api";
+import { NextResponse } from "next/server";
 
-export default async function handler(req, res) {
-  const { brandCode, fipeTable } = req.query;
+export async function GET(req, context) {
+  const { brandCode, fipeTable } = context;
 
   try {
     const cars = await searchForAllCarsBrand(brandCode, fipeTable);
-    await res.status(200).json(cars);
+      return NextResponse.json(cars, { status: 200 })
   } catch (error) {}
 }

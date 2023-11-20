@@ -1,10 +1,11 @@
-import { searchForTable } from "../../../services/fipe_api";
+import { NextResponse } from 'next/server'
+import { searchForTable } from "@/services/fipe_api";
+export async function GET(req, res) {
 
-export default async function handler(req, res) {
   try {
     const data = await searchForTable();
-    res.status(200).json(data);
+    return NextResponse.json(data, { status: 200 })
   } catch (error) {
-    res.status(400).json({ error: "Não foi possível fazer esta solicitação" });
+    return NextResponse.json({ error: "Não foi possível fazer esta solicitação" }, {status: 400});
   }
 }
