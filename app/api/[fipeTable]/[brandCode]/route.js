@@ -2,7 +2,7 @@ import { searchForAllCarsBrand } from "@/services/fipe_api";
 import { NextResponse } from "next/server";
 
 export async function GET(req, context) {
-  const { brandCode, fipeTable } = context;
+  const { brandCode, fipeTable } = context.params;
 
   try {
     const cars = await searchForAllCarsBrand(brandCode, fipeTable);

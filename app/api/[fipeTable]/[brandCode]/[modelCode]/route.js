@@ -3,7 +3,7 @@ import { searcForCarYears } from "@/services/fipe_api";
 import { extractSortedYears } from "@/utils";
 
 export async function GET(req, context) {
-  const { modelCode, brandCode, fipeTable } = context;
+  const { modelCode, brandCode, fipeTable } = context.params;
 
   try {
     const cars = await searcForCarYears(modelCode, brandCode, fipeTable);

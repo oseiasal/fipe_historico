@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { searchForBrands } from "@/services/fipe_api";
 
 export async function GET(req: Request, context: any) {
-  const {fipeTable} = context;
+  const {fipeTable} = context.params;
  
   try {
     const data = await searchForBrands(fipeTable);
