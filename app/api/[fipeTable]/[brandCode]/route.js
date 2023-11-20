@@ -7,5 +7,7 @@ export async function GET(req, context) {
   try {
     const cars = await searchForAllCarsBrand(brandCode, fipeTable);
       return NextResponse.json(cars, { status: 200 })
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: "Não foi possível fazer esta solicitação" }, {status: 400});
+  }
 }

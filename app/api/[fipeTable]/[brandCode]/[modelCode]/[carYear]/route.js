@@ -12,5 +12,7 @@ export async function GET(req, context) {
       fipeTable,
     );
     return NextResponse.json(data, { status: 200 })
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: "Não foi possível fazer esta solicitação" }, {status: 400});
+  }
 }

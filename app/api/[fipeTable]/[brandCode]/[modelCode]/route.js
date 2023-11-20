@@ -9,5 +9,7 @@ export async function GET(req, context) {
     const cars = await searcForCarYears(modelCode, brandCode, fipeTable);
     const list = await extractSortedYears(cars);
       return NextResponse.json(list, { status: 200 })
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: "Não foi possível fazer esta solicitação" }, {status: 400});
+  }
 }
