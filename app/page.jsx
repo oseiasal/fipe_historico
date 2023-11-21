@@ -142,90 +142,100 @@ export default function IndexPage() {
 
   return (
     <>
-      <div>
-        <select
-          defaultValue=""
-          onChange={(evt) => {
-            setBrandCode(evt.target.value);
-          }}
-        >
-          <option selected>-- selecione -- </option>
-          {brandList.length == 0 && (
-            <option disabled value="">
-              {" "}
-              Pesquisando marcas...
-            </option>
-          )}
-          {brandList.length > 0 &&
-            brandList.map((brand, index) => (
-              <option key={index} value={brand.Value}>
-                {brand.Label}
+      <div className="container mx-auto p-5">
+        <div className="rounded p-2">
+          <select
+            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
+            defaultValue=""
+            onChange={(evt) => {
+              setBrandCode(evt.target.value);
+            }}
+          >
+            <option selected>-- selecione -- </option>
+            {brandList.length == 0 && (
+              <option disabled value="">
+                {" "}
+                Pesquisando marcas...
+              </option>
+            )}
+            {brandList.length > 0 &&
+              brandList.map((brand, index) => (
+                <option key={index} value={brand.Value}>
+                  {brand.Label}
+                </option>
+              ))}
+          </select>
+
+          <select
+            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
+            defaultValue=""
+            onChange={(evt) => setModelCode(evt.target.value)}
+          >
+            <option selected>-- selecione -- </option>
+            {brandCarsList?.map((carModel, index) => (
+              <option key={index} value={carModel?.Value}>
+                {carModel?.Label}
               </option>
             ))}
-        </select>
+          </select>
 
-        <select
-          defaultValue=""
-          onChange={(evt) => setModelCode(evt.target.value)}
-        >
-          <option selected>-- selecione -- </option>
-          {brandCarsList?.map((carModel, index) => (
-            <option key={index} value={carModel?.Value}>
-              {carModel?.Label}
-            </option>
-          ))}
-        </select>
+          <select
+            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
+            onChange={(evt) => setYear(evt.target.value)}
+          >
+            <option selected>-- selecione -- </option>
+            {yearsList?.map((year, index) => (
+              <option key={index} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
 
-        <select onChange={(evt) => setYear(evt.target.value)}>
-          <option selected>-- selecione -- </option>
-          {yearsList?.map((year, index) => (
-            <option key={index} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
+          <button
+            className="mx-2 py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-400"
+            onClick={() => {
+              setTable([]);
+              createHistoricalTable(fipeCode);
+            }}
+          >
+            Click
+          </button>
+        </div>
 
-      <button
-        onClick={() => {
-          setTable([]);
-          createHistoricalTable(fipeCode);
-        }}
-      >
-        {" "}
-        Click
-      </button>
-
-      <table>
-        <thead>
-          <tr>
-            <th>Valor</th>
-            {/* <th>Marca</th> */}
-            {/* <th>Ano Modelo</th> */}
-            {/* <th>Combustível</th> */}
-            <th>Mês Referência</th>
-            <th>Código Fipe</th>
-            {/* <th>Tipo Veículo</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {orderByMonthReference(table)?.map((veiculo, index) => {
-            if (veiculo.Valor == undefined) return;
-
-            return (
-              <tr key={index}>
-                <td>{veiculo.Valor}</td>
-                {/* <td>{veiculo.Marca}</td> */}
-                {/* <td>{veiculo.AnoModelo}</td> */}
-                {/* <td>{veiculo.Combustivel}</td> */}
-                <td>{veiculo.MesReferencia}</td>
-                <td>{veiculo.CodigoFipe}</td>
-                {/* <td>{veiculo.TipoVeiculo}</td> */}
+        <div className="mx-4">
+          <table className="border-collapse table-fixed w-full text-left">
+            <thead className="border bg-slate-500 text-white ">
+              <tr>
+                <th className="p-2">Valor</th>
+                {/* <th>Marca</th> */}
+                {/* <th>Ano Modelo</th> */}
+                {/* <th>Combustível</th> */}
+                <th className="p-2">Mês Referência</th>
+                <th className="p-2">Código Fipe</th>
+                {/* <th>Tipo Veículo</th> */}
               </tr>
-            );
-          })}
-        </tbody>
-      </table>
+            </thead>
+
+            <tbody>
+              {orderByMonthReference(table)?.map((veiculo, index) => {
+                if (veiculo?.Valor == undefined) return;
+
+                return (
+                  <tr key={index} className="border">
+                    <td className="text-sm">{veiculo?.Valor}</td>
+                    {/* <td>{veiculo.Marca}</td> */}
+                    {/* <td>{veiculo.AnoModelo}</td> */}
+                    {/* <td>{veiculo.Combustivel}</td> */}
+                    <td className="text-sm">{veiculo.MesReferencia}</td>
+                    <td className="text-sm">{veiculo.CodigoFipe}</td>
+                    {/* <td>{veiculo.TipoVeiculo}</td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </>
   );
 }
