@@ -136,7 +136,7 @@ export default function IndexPage() {
    const final_table = searchForLastFipeCode(
      tableList,
      fipeData.AnoModelo
-   ).Codigo;
+   )?.Codigo;
 
    const promises = [];
 
@@ -159,61 +159,67 @@ export default function IndexPage() {
   return (
     <>
       <div className="container mx-auto p-5">
-        <div className="rounded p-2">
-          <select
-            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
-            defaultValue=""
-            onChange={(evt) => {
-              setBrandCode(evt.target.value);
-            }}
-          >
-            <option selected>-- Marca -- </option>
-            {brandList.length == 0 && (
-              <option disabled value="">
-                {" "}
-                Pesquisando marcas...
-              </option>
-            )}
-            {brandList.length > 0 &&
-              brandList.map((brand, index) => (
-                <option key={index} value={brand.Value}>
-                  {brand.Label}
+        <div className="flex flex-wrap w-auto justify-between">
+          <div className="flex flex-col  m-6 w-2/4">
+            <h1 className="text-2xl mb-2">Histórico de usados FIPE</h1>
+            <p>Em desenvolvimento</p>
+          </div>
+          <div className="flex flex-col m-6 w-1/3 ">
+            <select
+              className="m-2 border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
+              defaultValue=""
+              onChange={(evt) => {
+                setBrandCode(evt.target.value);
+              }}
+            >
+              <option selected>-- Marca -- </option>
+              {brandList.length == 0 && (
+                <option disabled value="">
+                  {" "}
+                  Pesquisando marcas...
+                </option>
+              )}
+              {brandList.length > 0 &&
+                brandList.map((brand, index) => (
+                  <option key={index} value={brand.Value}>
+                    {brand.Label}
+                  </option>
+                ))}
+            </select>
+
+            <select
+              className="m-2  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
+              defaultValue=""
+              onChange={(evt) => setModelCode(evt.target.value)}
+            >
+              <option selected>-- Modelo -- </option>
+              {brandCarsList?.map((carModel, index) => (
+                <option key={index} value={carModel?.Value}>
+                  {carModel?.Label}
                 </option>
               ))}
-          </select>
+            </select>
 
-          <select
-            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
-            defaultValue=""
-            onChange={(evt) => setModelCode(evt.target.value)}
-          >
-            <option selected>-- Modelo -- </option>
-            {brandCarsList?.map((carModel, index) => (
-              <option key={index} value={carModel?.Value}>
-                {carModel?.Label}
-              </option>
-            ))}
-          </select>
-
-          <select
-            className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
-            onChange={(evt) => setYear(evt.target.value)}
-          >
-            <option selected>-- Ano -- </option>
-            {yearsList?.map((year, index) => (
-              <option key={index} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
-          <Button
-            isLoading={isLoading}
-            className="mx-2 py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-400"
-            onClick={() => {
-              setTable([]);
-              createHistoricalTable(fipeCode);
-            }}
-          ></Button>
+            <select
+              className="m-2  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
+              onChange={(evt) => setYear(evt.target.value)}
+            >
+              <option selected>-- Ano -- </option>
+              {yearsList?.map((year, index) => (
+                <option key={index} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+            <Button
+              isLoading={isLoading}
+              className="m-2 w-max self-end py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-400"
+              onClick={() => {
+                setTable([]);
+                createHistoricalTable(fipeCode);
+              }}
+            ></Button>
+          </div>
         </div>
 
         <div className="mx-4">
