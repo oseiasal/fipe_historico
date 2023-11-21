@@ -160,11 +160,11 @@ export default function IndexPage() {
     <>
       <div className="container mx-auto p-5">
         <div className="flex flex-wrap w-auto justify-between">
-          <div className="flex flex-col  m-6 w-2/4">
+          <div className="flex flex-col  m-6 w-2/4 max-md:w-full">
             <h1 className="text-2xl mb-2">Histórico de usados FIPE</h1>
             <p>Em desenvolvimento</p>
           </div>
-          <div className="flex flex-col m-6 w-1/3 ">
+          <div className="flex flex-col m-6 w-1/3 max-md:w-full">
             <select
               className="m-2 border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
               defaultValue=""
