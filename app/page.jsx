@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import { orderByMonthReference, searchForLastFipeCode } from "../utils";
+import Button from "@/components/Button";
 
 const axios = require("axios");
 export default function IndexPage() {
@@ -17,6 +18,8 @@ export default function IndexPage() {
   const [fipeData, setFipeData] = useState("");
 
   const [table, setTable] = useState([]);
+
+  const [isLoading, setisLoading] = useState(false)
 
   useEffect(() => {
     'use client'
@@ -127,18 +130,31 @@ export default function IndexPage() {
       });
   };
 
-  const createHistoricalTable = (fipeCode) => {
-    let actual_table = fipeCode;
-    const final_table = searchForLastFipeCode(
-      tableList,
-      fipeData.AnoModelo,
-    ).Codigo;
-    for (let index = actual_table; index > final_table; index--) {
-      getFipeData(index, brandCode, modelCode, fipeData.AnoModelo).then((res) =>
-        setTable((state) => [...state, res]),
-      );
-    }
-  };
+ const createHistoricalTable = async (fipeCode) => {
+   setisLoading(true);
+   let actual_table = fipeCode;
+   const final_table = searchForLastFipeCode(
+     tableList,
+     fipeData.AnoModelo
+   ).Codigo;
+
+   const promises = [];
+
+   for (let index = actual_table; index > final_table; index--) {
+     promises.push(
+       getFipeData(index, brandCode, modelCode, fipeData.AnoModelo)
+     );
+   }
+
+   try {
+     const results = await Promise.all(promises);
+     setTable((state) => [...state, ...results]);
+     setisLoading(false);
+   } catch (error) {
+     console.error("Error fetching data:", error);
+     setisLoading(false);
+   }
+ };
 
   return (
     <>
@@ -190,16 +206,14 @@ export default function IndexPage() {
               </option>
             ))}
           </select>
-
-          <button
+          <Button
+            isLoading={isLoading}
             className="mx-2 py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-400"
             onClick={() => {
               setTable([]);
               createHistoricalTable(fipeCode);
             }}
-          >
-            Click
-          </button>
+          ></Button>
         </div>
 
         <div className="mx-4">
@@ -207,12 +221,12 @@ export default function IndexPage() {
             <thead className="border bg-slate-500 text-white ">
               <tr>
                 <th className="p-2">Valor</th>
-                {/* <th>Marca</th> */}
+                <th>Marca</th>
                 {/* <th>Ano Modelo</th> */}
                 {/* <th>Combustível</th> */}
-                <th className="p-2">Mês Referência</th>
+                {/* <th className="p-2">Mês Referência</th> */}
                 <th className="p-2">Código Fipe</th>
-                {/* <th>Tipo Veículo</th> */}
+                <th>Modelo</th>
               </tr>
             </thead>
 
@@ -228,7 +242,7 @@ export default function IndexPage() {
                     {/* <td>{veiculo.Combustivel}</td> */}
                     <td className="text-sm">{veiculo.MesReferencia}</td>
                     <td className="text-sm">{veiculo.CodigoFipe}</td>
-                    {/* <td>{veiculo.TipoVeiculo}</td> */}
+                    <td>{veiculo.Modelo}</td>
                   </tr>
                 );
               })}
