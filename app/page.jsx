@@ -167,7 +167,7 @@ export default function IndexPage() {
               setBrandCode(evt.target.value);
             }}
           >
-            <option selected>-- selecione -- </option>
+            <option selected>-- Marca -- </option>
             {brandList.length == 0 && (
               <option disabled value="">
                 {" "}
@@ -187,7 +187,7 @@ export default function IndexPage() {
             defaultValue=""
             onChange={(evt) => setModelCode(evt.target.value)}
           >
-            <option selected>-- selecione -- </option>
+            <option selected>-- Modelo -- </option>
             {brandCarsList?.map((carModel, index) => (
               <option key={index} value={carModel?.Value}>
                 {carModel?.Label}
@@ -199,7 +199,7 @@ export default function IndexPage() {
             className="mx-2 border-solid border-blue-600 border rounded-md py-1 px-1 text-gray-700"
             onChange={(evt) => setYear(evt.target.value)}
           >
-            <option selected>-- selecione -- </option>
+            <option selected>-- Ano -- </option>
             {yearsList?.map((year, index) => (
               <option key={index} value={year}>
                 {year}
