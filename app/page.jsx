@@ -223,15 +223,15 @@ export default function IndexPage() {
         </div>
 
         <div className="mx-4">
-          <table className="border-collapse table-fixed w-full text-left">
+          <table className="border-collapse table w-full text-left">
             <thead className="border bg-slate-500 text-white ">
               <tr>
                 <th className="p-2">Valor</th>
-                <th>Marca</th>
+                {/* <th>Marca</th> */}
                 {/* <th>Ano Modelo</th> */}
                 {/* <th>Combustível</th> */}
-                {/* <th className="p-2">Mês Referência</th> */}
-                <th className="p-2">Código Fipe</th>
+                <th className="p-2">Mês Referência</th>
+                <th className="p-2 w-max">Código Fipe</th>
                 <th>Modelo</th>
               </tr>
             </thead>
@@ -246,7 +246,7 @@ export default function IndexPage() {
                     {/* <td>{veiculo.Marca}</td> */}
                     {/* <td>{veiculo.AnoModelo}</td> */}
                     {/* <td>{veiculo.Combustivel}</td> */}
-                    <td className="text-sm">{veiculo.MesReferencia}</td>
+                    <td className="text-sm w-max">{veiculo.MesReferencia}</td>
                     <td className="text-sm">{veiculo.CodigoFipe}</td>
                     <td>{veiculo.Modelo}</td>
                   </tr>
