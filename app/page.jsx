@@ -1,9 +1,11 @@
 'use client'
 import { useEffect, useState } from "react";
-import { orderByMonthReference, searchForLastFipeCode } from "../utils";
+import { calcVariation, orderByMonthReference, searchForLastFipeCode } from "../utils";
 import Button from "@/components/Button";
 
 const axios = require("axios");
+
+
 export default function IndexPage() {
   const [tableList, setTableList] = useState([]);
   const [fipeCode, setFipeCode] = useState(0);
@@ -156,12 +158,15 @@ export default function IndexPage() {
    }
  };
 
+
   return (
     <>
       <div className="container mx-auto p-5">
         <div className="flex flex-wrap w-auto justify-between">
           <div className="flex flex-col  m-6 w-2/4 max-md:w-full">
-            <h1 className="text-2xl mb-2">Histórico de usados FIPE</h1>
+            <h1 className="text-2xl mb-2 font-semibold">
+              Histórico de usados FIPE
+            </h1>
             <p>Em desenvolvimento</p>
           </div>
           <div className="flex flex-col m-6 w-1/3 max-md:w-full">
@@ -219,6 +224,40 @@ export default function IndexPage() {
                 createHistoricalTable(fipeCode);
               }}
             ></Button>
+          </div>
+        </div>
+
+        <div className="m-5">
+          <h2 className="text-xl font-semibold mt-2 mb-2">Variação:</h2>
+          <div className="flex flex-row">
+            <div
+              className={`${
+                calcVariation(table, 2) >= 0 ? "bg-green-500" : "bg-red-500"
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+            >
+              <span className="h-fit">2 meses {calcVariation(table, 2)}% </span>
+            </div>
+            <div
+              className={`${
+                calcVariation(table, 6) >= 0 ? "bg-green-500" : "bg-red-500"
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+            >
+              <span>6 meses {calcVariation(table, 6)}%</span>
+            </div>
+            <div
+              className={`${
+                calcVariation(table, 12) >= 0 ? "bg-green-500" : "bg-red-500"
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+            >
+              <span>12 meses {calcVariation(table, 12)}%</span>
+            </div>
+            <div
+              className={`${
+                calcVariation(table, 120) >= 0 ? "bg-green-500" : "bg-red-500"
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+            >
+              <span> 10 anos {calcVariation(table, 120)}%</span>
+            </div>
           </div>
         </div>
 

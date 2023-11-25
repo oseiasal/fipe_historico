@@ -44,3 +44,26 @@ export const orderByMonthReference = (array) => {
 
   return arrayOrdenado;
 };
+
+export function calcVariation(array, months) {
+    let filteredArray = array?.filter(item => item.Valor);
+
+    let numericArray = filteredArray?.map(carro => {
+        // Cria uma cópia do objeto para evitar modificar o array externo
+        const carroCopy = { ...carro };
+
+        // Verifica se a propriedade "Valor" existe e tem um formato válido
+        if (carroCopy && carroCopy.Valor && typeof carroCopy.Valor === 'string') {
+            carroCopy.Valor = parseFloat(carroCopy.Valor.replace(/\D/g, '')) / 100;
+        } else {
+            // Se não for possível converter, atribui 0
+            carroCopy.Valor = 0;
+        }
+
+        return carroCopy;
+    });
+
+    let variation = ((numericArray[0]?.Valor - numericArray[months - 1]?.Valor) / numericArray[months - 1]?.Valor) * 100;
+
+    return parseFloat(variation.toFixed(2));
+}
