@@ -87,3 +87,24 @@ export function convertInReactSelectOptions (cars){
         }
     }) || []
 }
+
+export function transformarDadosParaChartJS(dados) {
+    // Separar os dados em rótulos e conjuntos de dados
+    const rotulos = dados.map(item => item.MesReferencia).filter(item => item != undefined).reverse();
+    const valores = dados.map(item => parseFloat(item.Valor?.replace('R$ ', '').replace('', ''))).filter(item => isNaN(item) == false).map(item => item*1000).reverse();
+
+    // Criar objeto de conjunto de dados no formato do Chart.js
+    const dataset = {
+        label: 'Valor do veículo ao longo dos meses',
+        data: valores,
+        backgroundColor: 'lightblue',
+        borderColor: 'blue', // Cor da linha do gráfico
+        borderWidth: 1 // Largura da linha do gráfico
+    };
+
+    // Retornar um objeto no formato esperado pelo Chart.js
+    return {
+        labels: rotulos,
+        datasets: [dataset]
+    };
+}

@@ -1,11 +1,32 @@
 'use client'
 import { useEffect, useState } from "react";
-import { calcVariation, convertBrandsInReactSelectOptions, convertInReactSelectOptions, orderByMonthReference, searchForLastFipeCode } from "../utils";
+import { calcVariation, convertBrandsInReactSelectOptions, convertInReactSelectOptions, orderByMonthReference, searchForLastFipeCode, transformarDadosParaChartJS } from "../utils";
 import Button from "@/components/Button";
 
 import Select from "react-select";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Line } from "react-chartjs-2";
 
 const axios = require("axios");
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 
 export default function IndexPage() {
@@ -24,6 +45,7 @@ export default function IndexPage() {
   const [table, setTable] = useState([]);
 
   const [isLoading, setisLoading] = useState(false)
+
 
   useEffect(() => {
     'use client'
@@ -213,56 +235,81 @@ export default function IndexPage() {
           </div>
         </div>
 
-        <div className="m-5">
-          <h2 className="text-xl font-semibold mt-2 mb-2">Variação:</h2>
-          <div className="flex flex-row flex-wrap">
-            <div
-              className={`${
-                isNaN(calcVariation(table, 2))
-                  ? "hidden"
-                  : calcVariation(table, 2) >= 0
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
-            >
-              <span className="h-fit">2 meses {calcVariation(table, 2)}% </span>
-            </div>
-            <div
-              className={`${
-                isNaN(calcVariation(table, 6))
-                  ? "hidden"
-                  : calcVariation(table, 6) >= 0
-                  ? "bg-green-500"
-                  : "bg-red-500 min-[150px]"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
-            >
-              <span>6 meses {calcVariation(table, 6)}%</span>
-            </div>
-            <div
-              className={`${
-                isNaN(calcVariation(table, 12))
-                  ? "hidden"
-                  : calcVariation(table, 12) >= 0
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
-            >
-              <span>12 meses {calcVariation(table, 12)}%</span>
-            </div>
+        {table.length > 0 && (
+          <div className="m-5">
+            <h2 className="text-xl font-semibold mt-2 mb-2">Variação:</h2>
+            <div className="flex flex-row flex-wrap">
+              <div
+                className={`${
+                  isNaN(calcVariation(table, 2))
+                    ? "hidden"
+                    : calcVariation(table, 2) >= 0
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+              >
+                <span className="h-fit">
+                  2 meses {calcVariation(table, 2)}%{" "}
+                </span>
+              </div>
+              <div
+                className={`${
+                  isNaN(calcVariation(table, 6))
+                    ? "hidden"
+                    : calcVariation(table, 6) >= 0
+                    ? "bg-green-500"
+                    : "bg-red-500 min-[150px]"
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+              >
+                <span>6 meses {calcVariation(table, 6)}%</span>
+              </div>
+              <div
+                className={`${
+                  isNaN(calcVariation(table, 12))
+                    ? "hidden"
+                    : calcVariation(table, 12) >= 0
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+              >
+                <span>12 meses {calcVariation(table, 12)}%</span>
+              </div>
 
-            <div
-              className={`${
-                isNaN(calcVariation(table, 120))
-                  ? "hidden"
-                  : calcVariation(table, 12) >= 0
-                  ? "bg-green-500"
-                  : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
-            >
-              <span> 10 anos {calcVariation(table, 120)}%</span>
+              <div
+                className={`${
+                  isNaN(calcVariation(table, 120))
+                    ? "hidden"
+                    : calcVariation(table, 12) >= 0
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+              >
+                <span> 10 anos {calcVariation(table, 120)}%</span>
+              </div>
             </div>
           </div>
-        </div>
+        )}
+
+        {table.length > 0 && (
+          <div className="p-5 h-[300px] w-full ">
+            <Line
+              data={transformarDadosParaChartJS(table) || { datasets: [] }}
+              width={1024}
+              options={{
+                layout: {
+                  padding: 10,
+                },
+                scales: {
+                  x: {
+                    grid: {
+                      display: false,
+                    },
+                  },
+                },
+              }}
+            />
+          </div>
+        )}
 
         <div className="mx-4">
           <table className="border-collapse table w-full text-left">
