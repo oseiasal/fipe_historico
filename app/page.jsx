@@ -218,14 +218,20 @@ export default function IndexPage() {
           <div className="flex flex-row flex-wrap">
             <div
               className={`${
-                calcVariation(table, 2) >= 0 ? "bg-green-500" : "bg-red-500"
+                isNaN(calcVariation(table, 2))
+                  ? "hidden"
+                  : calcVariation(table, 2) >= 0
+                  ? "bg-green-500"
+                  : "bg-red-500"
               }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span className="h-fit">2 meses {calcVariation(table, 2)}% </span>
             </div>
             <div
               className={`${
-                calcVariation(table, 6) >= 0
+                isNaN(calcVariation(table, 6))
+                  ? "hidden"
+                  : calcVariation(table, 6) >= 0
                   ? "bg-green-500"
                   : "bg-red-500 min-[150px]"
               }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
@@ -234,14 +240,23 @@ export default function IndexPage() {
             </div>
             <div
               className={`${
-                calcVariation(table, 12) >= 0 ? "bg-green-500" : "bg-red-500"
+                isNaN(calcVariation(table, 12))
+                  ? "hidden"
+                  : calcVariation(table, 12) >= 0
+                  ? "bg-green-500"
+                  : "bg-red-500"
               }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span>12 meses {calcVariation(table, 12)}%</span>
             </div>
+
             <div
               className={`${
-                calcVariation(table, 120) >= 0 ? "bg-green-500" : "bg-red-500"
+                isNaN(calcVariation(table, 120))
+                  ? "hidden"
+                  : calcVariation(table, 12) >= 0
+                  ? "bg-green-500"
+                  : "bg-red-500"
               }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span> 10 anos {calcVariation(table, 120)}%</span>
