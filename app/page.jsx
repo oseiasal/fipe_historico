@@ -172,8 +172,8 @@ export default function IndexPage() {
             <p>Em desenvolvimento</p>
           </div>
           <div className="flex flex-col m-6 w-1/3 max-md:w-full">
-
             <Select
+              placeholder="Pesquisar Marca"
               onChange={(option) => {
                 setBrandCode(option.value);
               }}
@@ -182,6 +182,7 @@ export default function IndexPage() {
             />
 
             <Select
+              placeholder="Pesquisar Modelo"
               onChange={(option) => {
                 setModelCode(option.value);
               }}
@@ -190,6 +191,7 @@ export default function IndexPage() {
             />
 
             <select
+              placeholder="Ano"
               className="m-4  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
               onChange={(evt) => setYear(evt.target.value)}
             >
