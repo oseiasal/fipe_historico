@@ -67,3 +67,23 @@ export function calcVariation(array, months) {
 
     return parseFloat(variation.toFixed(2));
 }
+
+export function convertBrandsInReactSelectOptions (cars){
+    return cars?.map(car => {
+        let vehicle = {...car}
+        return {
+            value: vehicle.Value,
+            label: vehicle.Label
+        }
+    }) || []
+}
+
+export function convertInReactSelectOptions (cars){
+    return cars?.map(car => {
+        let vehicle = {...car}
+        return {
+            value: vehicle.Value,
+            label: vehicle.Label
+        }
+    }) || []
+}

@@ -1,7 +1,9 @@
 'use client'
 import { useEffect, useState } from "react";
-import { calcVariation, orderByMonthReference, searchForLastFipeCode } from "../utils";
+import { calcVariation, convertBrandsInReactSelectOptions, convertInReactSelectOptions, orderByMonthReference, searchForLastFipeCode } from "../utils";
 import Button from "@/components/Button";
+
+import Select from "react-select";
 
 const axios = require("axios");
 
@@ -170,43 +172,25 @@ export default function IndexPage() {
             <p>Em desenvolvimento</p>
           </div>
           <div className="flex flex-col m-6 w-1/3 max-md:w-full">
-            <select
-              className="m-2 border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
-              defaultValue=""
-              onChange={(evt) => {
-                setBrandCode(evt.target.value);
+
+            <Select
+              onChange={(option) => {
+                setBrandCode(option.value);
               }}
-            >
-              <option selected>-- Marca -- </option>
-              {brandList.length == 0 && (
-                <option disabled value="">
-                  {" "}
-                  Pesquisando marcas...
-                </option>
-              )}
-              {brandList.length > 0 &&
-                brandList.map((brand, index) => (
-                  <option key={index} value={brand.Value}>
-                    {brand.Label}
-                  </option>
-                ))}
-            </select>
+              options={convertBrandsInReactSelectOptions(brandList)}
+              className="m-2 py-2 px-2 text-gray-700"
+            />
+
+            <Select
+              onChange={(option) => {
+                setModelCode(option.value);
+              }}
+              options={convertInReactSelectOptions(brandCarsList)}
+              className="m-2 py-2 px-2 text-gray-700"
+            />
 
             <select
-              className="m-2  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
-              defaultValue=""
-              onChange={(evt) => setModelCode(evt.target.value)}
-            >
-              <option selected>-- Modelo -- </option>
-              {brandCarsList?.map((carModel, index) => (
-                <option key={index} value={carModel?.Value}>
-                  {carModel?.Label}
-                </option>
-              ))}
-            </select>
-
-            <select
-              className="m-2  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
+              className="m-4  border-solid border-blue-600 border rounded-md py-2 px-1 text-gray-700"
               onChange={(evt) => setYear(evt.target.value)}
             >
               <option selected>-- Ano -- </option>
