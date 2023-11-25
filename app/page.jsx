@@ -229,32 +229,34 @@ export default function IndexPage() {
 
         <div className="m-5">
           <h2 className="text-xl font-semibold mt-2 mb-2">Variação:</h2>
-          <div className="flex flex-row">
+          <div className="flex flex-row flex-wrap">
             <div
               className={`${
                 calcVariation(table, 2) >= 0 ? "bg-green-500" : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span className="h-fit">2 meses {calcVariation(table, 2)}% </span>
             </div>
             <div
               className={`${
-                calcVariation(table, 6) >= 0 ? "bg-green-500" : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+                calcVariation(table, 6) >= 0
+                  ? "bg-green-500"
+                  : "bg-red-500 min-[150px]"
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span>6 meses {calcVariation(table, 6)}%</span>
             </div>
             <div
               className={`${
                 calcVariation(table, 12) >= 0 ? "bg-green-500" : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span>12 meses {calcVariation(table, 12)}%</span>
             </div>
             <div
               className={`${
                 calcVariation(table, 120) >= 0 ? "bg-green-500" : "bg-red-500"
-              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center`}
+              }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
             >
               <span> 10 anos {calcVariation(table, 120)}%</span>
             </div>
