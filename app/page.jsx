@@ -246,11 +246,12 @@ export default function IndexPage() {
                     : calcVariation(table, 2) >= 0
                     ? "bg-green-500"
                     : "bg-red-500"
-                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[160px] mt-1 flex-col`}
               >
-                <span className="h-fit">
-                  2 meses {calcVariation(table, 2)}%{" "}
+                <span className="h-fit text-3xl">
+                  {calcVariation(table, 2)}%{" "}
                 </span>
+                <span> 2 meses </span>
               </div>
               <div
                 className={`${
@@ -259,9 +260,12 @@ export default function IndexPage() {
                     : calcVariation(table, 6) >= 0
                     ? "bg-green-500"
                     : "bg-red-500 min-[150px]"
-                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[160px] mt-1 flex-col`}
               >
-                <span>6 meses {calcVariation(table, 6)}%</span>
+                <span className="h-fit text-3xl">
+                  {calcVariation(table, 6)}%
+                </span>
+                <span>6 meses </span>
               </div>
               <div
                 className={`${
@@ -269,22 +273,28 @@ export default function IndexPage() {
                     ? "hidden"
                     : calcVariation(table, 12) >= 0
                     ? "bg-green-500"
-                    : "bg-red-500"
-                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+                    : "bg-red-500 min-[150px]"
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[160px] mt-1 flex-col`}
               >
-                <span>12 meses {calcVariation(table, 12)}%</span>
+                <span className="h-fit text-3xl">
+                  {calcVariation(table, 12)}%
+                </span>
+                <span>12 meses </span>
               </div>
 
               <div
                 className={`${
                   isNaN(calcVariation(table, 120))
                     ? "hidden"
-                    : calcVariation(table, 12) >= 0
+                    : calcVariation(table, 120) >= 0
                     ? "bg-green-500"
                     : "bg-red-500"
-                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[150px] mt-1`}
+                }  h-24 p-5 rounded-sm text-white  text-center mr-1 flex justify-center items-center min-[160px] mt-1 flex-col`}
               >
-                <span> 10 anos {calcVariation(table, 120)}%</span>
+                <span className="h-fit text-3xl">
+                  {calcVariation(table, 120)}%
+                </span>
+                <span>10 anos </span>
               </div>
             </div>
           </div>
