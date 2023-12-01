@@ -46,24 +46,24 @@ export const orderByMonthReference = (array) => {
 };
 
 export function calcVariation(array, months) {
-    let filteredArray = array?.filter(item => item.Valor);
+    let filteredArray = array?.filter(item => item?.Valor);
 
     let numericArray = filteredArray?.map(carro => {
         // Cria uma cópia do objeto para evitar modificar o array externo
         const carroCopy = { ...carro };
 
         // Verifica se a propriedade "Valor" existe e tem um formato válido
-        if (carroCopy && carroCopy.Valor && typeof carroCopy.Valor === 'string') {
-            carroCopy.Valor = parseFloat(carroCopy.Valor.replace(/\D/g, '')) / 100;
+        if (carroCopy && carroCopy?.Valor&& typeof carroCopy?.Valor=== 'string') {
+            carroCopy['Valor']  = parseFloat(carroCopy?.Valor.replace(/\D/g, '')) / 100;
         } else {
             // Se não for possível converter, atribui 0
-            carroCopy.Valor = 0;
+            carroCopy['Valor'] = 0;
         }
 
         return carroCopy;
     });
 
-    let variation = ((numericArray[0]?.Valor - numericArray[months - 1]?.Valor) / numericArray[months - 1]?.Valor) * 100;
+    let variation = ((numericArray[0]?.Valor- numericArray[months - 1]?.Valor) / numericArray[months - 1]?.Valor) * 100;
 
     return parseFloat(variation.toFixed(2));
 }
@@ -72,8 +72,8 @@ export function convertBrandsInReactSelectOptions (cars){
     return cars?.map(car => {
         let vehicle = {...car}
         return {
-            value: vehicle.Value,
-            label: vehicle.Label
+            value: vehicle?.Value,
+            label: vehicle?.Label
         }
     }) || []
 }
@@ -82,16 +82,16 @@ export function convertInReactSelectOptions (cars){
     return cars?.map(car => {
         let vehicle = {...car}
         return {
-            value: vehicle.Value,
-            label: vehicle.Label
+            value: vehicle?.Value,
+            label: vehicle?.Label
         }
     }) || []
 }
 
 export function transformarDadosParaChartJS(dados) {
     // Separar os dados em rótulos e conjuntos de dados
-    const rotulos = dados.map(item => item.MesReferencia).filter(item => item != undefined).reverse();
-    const valores = dados.map(item => parseFloat(item.Valor?.replace('R$ ', '').replace('', ''))).filter(item => isNaN(item) == false).map(item => item*1000).reverse();
+    const rotulos = dados.map(item => item?.MesReferencia)?.filter(item => item != undefined).reverse();
+    const valores = dados.map(item => parseFloat(item?.Valor?.replace('R$ ', '')?.replace('', '')))?.filter(item => isNaN(item) == false).map(item => item*1000).reverse();
 
     // Criar objeto de conjunto de dados no formato do Chart.js
     const dataset = {
