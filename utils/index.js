@@ -108,3 +108,31 @@ export function transformarDadosParaChartJS(dados) {
         datasets: [dataset]
     };
 }
+
+export async function trackProgress(promises, updateProgress) {
+  const totalPromises = promises.length;
+  const progressIncrement = 25;
+  let completedPromises = 0;
+  let currentProgress = 0;
+
+  return Promise.all(
+    promises.map((promise, index) =>
+      promise.then((result) => {
+        completedPromises++;
+        const newProgress = Math.min(
+          Math.ceil((completedPromises / totalPromises) * 100),
+          currentProgress + progressIncrement
+        );
+
+        if (newProgress > currentProgress) {
+          currentProgress = newProgress;
+          // Atualize o estado no componente React
+          updateProgress(currentProgress);
+        }
+
+        return result;
+      })
+    )
+  );
+}
+

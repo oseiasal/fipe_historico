@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
-import { calcVariation, convertBrandsInReactSelectOptions, convertInReactSelectOptions, orderByMonthReference, searchForLastFipeCode, transformarDadosParaChartJS } from "../utils";
+import { calcVariation, convertBrandsInReactSelectOptions, convertInReactSelectOptions, orderByMonthReference, searchForLastFipeCode, trackProgress, transformarDadosParaChartJS } from "../utils";
 import Button from "@/components/Button";
 
 import Select from "react-select";
@@ -17,6 +17,8 @@ import {
 import { Line } from "react-chartjs-2";
 
 const axios = require("axios");
+
+
 
 ChartJS.register(
   CategoryScale,
@@ -45,6 +47,7 @@ export default function IndexPage() {
   const [table, setTable] = useState([]);
 
   const [isLoading, setisLoading] = useState(false)
+  const [progress, setProgress] = useState(0);
 
 
   useEffect(() => {
@@ -156,31 +159,54 @@ export default function IndexPage() {
       });
   };
 
- const createHistoricalTable = async (fipeCode) => {
-   setisLoading(true);
-   let actual_table = fipeCode;
-   const final_table = searchForLastFipeCode(
-     tableList,
-     fipeData.AnoModelo
-   )?.Codigo;
+const createHistoricalTable = async (fipeCode) => {
+  setisLoading(true);
+  let actual_table = fipeCode;
+  const final_table = searchForLastFipeCode(tableList, fipeData.AnoModelo)?.Codigo;
 
-   const promises = [];
+  const promises = [];
 
-   for (let index = actual_table; index > final_table; index--) {
-     promises.push(
-       getFipeData(index, brandCode, modelCode, fipeData.AnoModelo)
-     );
-   }
+  for (let index = actual_table; index > final_table; index--) {
+    promises.push(getFipeData(index, brandCode, modelCode, fipeData.AnoModelo));
+  }
 
-   try {
-     const results = await Promise.all(promises);
-     setTable((state) => [...state, ...results]);
-     setisLoading(false);
-   } catch (error) {
-     console.error("Error fetching data:", error);
-     setisLoading(false);
-   }
- };
+  const totalPromises = promises.length;
+  const progressIncrement = 25;
+  let completedPromises = 0;
+  let currentProgress = 0;
+
+  try {
+    const results = await Promise.all(
+      promises.map((promise) =>
+        promise.then((result) => {
+          completedPromises++;
+          const newProgress = Math.min(
+            Math.ceil((completedPromises / totalPromises) * 100),
+            currentProgress + progressIncrement
+          );
+
+          if (newProgress > currentProgress) {
+            currentProgress = newProgress;
+            // Atualize o progresso no console neste exemplo
+            setProgress(currentProgress)
+          }
+
+          return result;
+        })
+      )
+    );
+
+    // Atualize a tabela com os resultados
+    setTable((state) => [...state, ...results]);
+    // Indique que o carregamento foi concluído
+    setisLoading(false);
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    // Indique que o carregamento foi concluído mesmo em caso de erro
+    setisLoading(false);
+  }
+};
+
 
 
   return (
@@ -224,6 +250,9 @@ export default function IndexPage() {
                 </option>
               ))}
             </select>
+            <div className="m-4">
+              <progress id="file" value={progress} max="100"></progress>
+            </div>
             <Button
               isLoading={isLoading}
               className="m-2 w-max self-end py-2 px-3 bg-indigo-500 text-white text-sm font-semibold rounded-md shadow focus:outline-none hover:bg-indigo-400"
