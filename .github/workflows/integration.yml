@@ -11,12 +11,15 @@ jobs:
             
          - name: Configurar ambiente
            uses: actions/setup-node@v3
+           with:
+            node-version: '21'           
+           
         
          - name: Install Cypress
            run: npm install cypress -g
 
          - name: Install
-           run: npm install && npm run dev
+           run: npm install && npm run dev &
 
          - name: Testar
            run: cypress run

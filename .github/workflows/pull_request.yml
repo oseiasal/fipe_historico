@@ -1,0 +1,36 @@
+name: Teste Cypress no Merge para Main
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+
+      - name: Install Dependencies
+        run: |
+          npm install
+          npm install -g cypress
+
+      - name: Start Next.js
+        run: npm run dev &
+
+      - name: Wait for Next.js to start
+        run: sleep 20s
+
+      - name: Run Cypress Tests
+        run: cypress run
+
+      - name: Stop Next.js
+        run: kill $(lsof -t -i:3000)
