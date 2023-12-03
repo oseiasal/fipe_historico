@@ -24,7 +24,7 @@ jobs:
           npm install
 
       - name: Run nextdev
-        run: npm run dev
+        run: npm run dev &
 
       - name: Testar
         run: cypress run
