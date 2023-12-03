@@ -1,4 +1,4 @@
-name: Python application
+name: Test application
 
 on: [push]
 
@@ -11,8 +11,11 @@ jobs:
          - name: Configurar ambiente
            uses: actions/setup-node@v3
         
+         - name: Install Cypress
+           run: npm install cypress -g
+
          - name: Install
            run: npm install
 
          - name: Testar
-           run: npm run cypress:run
+           run: cypress run
