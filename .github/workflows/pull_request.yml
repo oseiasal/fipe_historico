@@ -3,7 +3,7 @@ name: Teste Cypress no Merge para Main
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   test:
