@@ -27,7 +27,7 @@ jobs:
       - name: Install and Run
         run: |
           npm install
-          npm run dev &
+          npm run dev
 
       - name: Testar
         run: cypress run
