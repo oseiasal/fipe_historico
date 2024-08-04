@@ -11,6 +11,9 @@ on:
 
 jobs:
   Deploy-Production:
+    concurrency: 
+      group: deploy_${{github.ref}}
+      cancel-in-progress: true
     environment: Production
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'refs/tags/v') && !contains(github.ref, '-rc')
