@@ -91,7 +91,7 @@ export function convertInReactSelectOptions (cars){
 export function transformarDadosParaChartJS(dados) {
     // Separar os dados em rótulos e conjuntos de dados
     const rotulos = dados.map(item => item?.MesReferencia)?.filter(item => item != undefined).reverse();
-    const valores = dados.map(item => parseFloat(item?.Valor?.replace('R$ ', '')?.replace('', '')))?.filter(item => isNaN(item) == false).map(item => item*1000).reverse();
+    const valores = dados.map(item => parseFloat(item?.Valor?.replace('R$ ', '')))?.filter(item => isNaN(item) == false).map(item => item*1000).reverse();
 
     // Criar objeto de conjunto de dados no formato do Chart.js
     const dataset = {
