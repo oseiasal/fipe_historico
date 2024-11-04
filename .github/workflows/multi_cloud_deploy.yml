@@ -9,10 +9,14 @@ concurrency:
   group: deploy_${{github.ref}}
 
 jobs:
-    deploy:
+      tests:
+        uses: oseiasal/fipe_historico/.github/workflows/pull_request.yml@master
+
+      deploy:
+        needs: [tests]
         runs-on: ubuntu-latest
         environment: Production
-       
+                
         steps:
             - uses: actions/checkout@v4
 
