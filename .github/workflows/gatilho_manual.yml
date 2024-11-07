@@ -1,0 +1,23 @@
+name: Gatilho manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      ambiente:
+        description: 'Ambiente de deploy'   # Descrição do input
+        required: true
+        default: 'staging'                 # Valor padrão
+        type: choice
+        options:                           # Opções para o input
+          - staging
+          - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v2
+
+      - name: Exibir ambiente
+        run: echo "Deploy no ambiente ${{ github.event.inputs.ambiente }}"
