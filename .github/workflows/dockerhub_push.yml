@@ -24,7 +24,7 @@ jobs:
 
       - name: Construir e taguear a imagem Docker
         env:
-          VERSION: ${{ github.ref_name }} 
+          VERSION: ${{ github.ref }} 
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} .
           docker tag ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
