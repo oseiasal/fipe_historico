@@ -26,10 +26,10 @@ jobs:
         env:
           VERSION: ${{ github.ref_name }} 
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/meuapp:${{ env.VERSION }} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/meuapp:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/meuapp:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
 
       - name: Fazer push da imagem para o Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/meuapp:${{ env.VERSION }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/meuapp:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
