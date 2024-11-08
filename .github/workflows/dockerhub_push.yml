@@ -23,13 +23,11 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Construir e taguear a imagem Docker
-        env:
-          VERSION: ${{ github.ref }} 
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} .
-          docker tag ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }} ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ github.ref_name }} .
+          docker tag ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ github.ref_name }} ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
 
       - name: Fazer push da imagem para o Docker Hub
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ env.VERSION }}
+          docker push ${{ secrets.DOCKER_USERNAME }}/fipe_historico:${{ github.ref_name }}
           docker push ${{ secrets.DOCKER_USERNAME }}/fipe_historico:latest
